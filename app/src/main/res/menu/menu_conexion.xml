@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/btOn"
+        android:title="@string/bt_on"
+        app:showAsAction="never"/>
+    <item android:id="@+id/btOff"
+        android:title="@string/bt_off"
+        app:showAsAction="never"/>
+    <item android:id="@+id/btExplorar"
+        android:title="@string/bt_explorar"
+        app:showAsAction="never"/>
+    <item android:id="@+id/btEmparejados"
+        android:title="@string/bt_emparejados"
+        app:showAsAction="never"/>
+
+</menu>

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">AppContacto</string>
     <string name="boton_transferir">Transferir Contactos</string>
+    <string name="texto_status">Texto Status</string>
+    <string name="bt_on">Bluetooth On</string>
+    <string name="bt_off">Bluetooth Off</string>
+    <string name="bt_explorar">Explorar Dispositivos</string>
+    <string name="bt_emparejados">Dispositivos Emparejados</string>
 </resources>
