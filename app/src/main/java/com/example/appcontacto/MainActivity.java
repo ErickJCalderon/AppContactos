@@ -1,18 +1,28 @@
 package com.example.appcontacto;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,7 +32,22 @@ public class MainActivity extends AppCompatActivity {
     ListView lvContactos;
     ArrayList<Contacto> contactos;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    int REQUEST_ENABLE_BT = 0;
+
+    private static final String TAG = "MainActivity";
+    private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+
+                    }
+                }
+            });
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,8 +57,79 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btOn:
+                if (!bluetoothAdapter.isEnabled()) {
+                    Toast.makeText(this, "Encendiendo Bluetooth", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    someActivityResultLauncher.launch(intent);
+                } else {
+                    Toast.makeText(this, "El Bluetooth ya esta encendido", Toast.LENGTH_SHORT).show();
+                }
+            case R.id.btOff:
+                try {
+                    if (bluetoothAdapter.isEnabled()) {
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            int[] grantResults) {
+                                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                                if (requestCode != REQUEST_CODE_REQUIRED_PERMISSIONS) {
+                                    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                                    return;
+                                }
+                                if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                                    Log.d(TAG, "Request permission success");
+                                    return;
+                                }
+                                Log.e(TAG, "Request permission failed");
+                                }
+
+                            }
+                        }
+                        bluetoothAdapter.disable();
+                    } else {
+                        Toast.makeText(this, "El Bluetooth ya esta desactivado", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            case R.id.btExplorar:
+            case R.id.btEmparejados:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void requestLocationPermission() {
+        final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_REQUIRED_PERMISSIONS);
+            return;
+        }
+    }
+
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this,new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                    1);
+        }
+
+
         setContentView(R.layout.activity_main);
         lvContactos = findViewById(R.id.lvContactos);
         warning = findViewById(R.id.btStatus);
@@ -64,22 +160,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             warning.setText("Su dispositvo cuenta con soporte Bluetooth");
         }
-
-
-        /*if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }*/
 
 
     }
