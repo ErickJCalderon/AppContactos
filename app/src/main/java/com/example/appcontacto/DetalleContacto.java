@@ -15,10 +15,10 @@ public class DetalleContacto extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_contacto);
 
         Bundle bundle = getIntent().getExtras();
-        String nombreContacto= bundle.getString("NombreContacto");
-        String apellidoContacto= bundle.getString("ApellidoContacto");
-        String emailContacto= bundle.getString("EmailContacto");
-        int telefonoContacto= bundle.getInt("TelefonoContacto");
+        String nombreContacto= bundle.getString("NOMBRECONTACTO");
+        String apellidoContacto= bundle.getString("APELLIDOCONTACTO");
+        String emailContacto= bundle.getString("EMAILCONTACTO");
+        int telefonoContacto= bundle.getInt("TELEFONOCONTACTO");
 
         tvNombre = (TextView) findViewById(R.id.tvNombre);
         tvApellido = (TextView) findViewById(R.id.tvApellido);
@@ -28,6 +28,6 @@ public class DetalleContacto extends AppCompatActivity {
         tvNombre.setText(nombreContacto);
         tvApellido.setText(apellidoContacto);
         tvEmail.setText(emailContacto);
-        tvTelefono.setText(telefonoContacto);
+        tvTelefono.setText(String.valueOf(telefonoContacto));
     }
 }

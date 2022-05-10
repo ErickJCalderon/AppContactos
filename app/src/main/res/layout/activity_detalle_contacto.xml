@@ -14,7 +14,7 @@
         android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="Sergio Ramos"
+        android:text="Renata"
         ></TextView>
     <TextView
         android:id="@+id/tvApellido"
@@ -23,7 +23,7 @@
         android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="Ramos"
+        android:text="Glassc"
         ></TextView>
     <TextView
         android:id="@+id/tvEmail"
@@ -32,7 +32,7 @@
         android:textSize="20sp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:text="sergio.ramos@meloinvento.com"
+        android:text="renata.glassc@meloinvento.com"
         ></TextView>
     <TextView
             android:id="@+id/tvTelefono"
