@@ -18,7 +18,7 @@ public class DetalleContacto extends AppCompatActivity {
         String nombreContacto= bundle.getString("NOMBRECONTACTO");
         String apellidoContacto= bundle.getString("APELLIDOCONTACTO");
         String emailContacto= bundle.getString("EMAILCONTACTO");
-        String telefonoContacto= bundle.getString("TELEFONOCONTACTO");
+        int telefonoContacto= bundle.getInt("TELEFONOCONTACTO");
 
         tvNombre = findViewById(R.id.tvNombre);
         tvApellido = findViewById(R.id.tvApellido);
@@ -28,6 +28,6 @@ public class DetalleContacto extends AppCompatActivity {
         tvNombre.setText(nombreContacto);
         tvApellido.setText(apellidoContacto);
         tvEmail.setText(emailContacto);
-        tvTelefono.setText(telefonoContacto);
+        tvTelefono.setText("" + telefonoContacto);
     }
 }

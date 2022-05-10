@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AppContacto</string>
+    <string name="boton_transferir">Transferir Contactos</string>
 </resources>
