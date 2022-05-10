@@ -20,10 +20,10 @@ public class DetalleContacto extends AppCompatActivity {
         String emailContacto= bundle.getString("EMAILCONTACTO");
         String telefonoContacto= bundle.getString("TELEFONOCONTACTO");
 
-        tvNombre = (TextView) findViewById(R.id.tvNombre);
-        tvApellido = (TextView) findViewById(R.id.tvApellido);
-        tvEmail = (TextView) findViewById(R.id.tvEmail);
-        tvTelefono = (TextView) findViewById(R.id.tvTelefono);
+        tvNombre = findViewById(R.id.tvNombre);
+        tvApellido = findViewById(R.id.tvApellido);
+        tvEmail = findViewById(R.id.tvEmail);
+        tvTelefono = findViewById(R.id.tvTelefono);
 
         tvNombre.setText(nombreContacto);
         tvApellido.setText(apellidoContacto);
