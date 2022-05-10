@@ -2,7 +2,10 @@ package com.example.appcontacto;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,5 +33,16 @@ public class MainActivity extends AppCompatActivity {
             nombreContactos.add(contacto.getNombre()+" "+contacto.getApellido());
         }
         lvContactos.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,nombreContactos));
+        lvContactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent= new Intent(MainActivity.this, DetalleContacto.class);
+                intent.putExtra("NombreContacto",contactos.get(position).getNombre());
+                intent.putExtra("ApellidoContacto",contactos.get(position).getApellido());
+                intent.putExtra("EmailContacto",contactos.get(position).getEmail());
+                intent.putExtra("TelefonoContacto",contactos.get(position).getTelefono());
+                startActivity(intent);
+            }
+        });
     }
 }
