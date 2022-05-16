@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -76,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btExplorar:
+                if(!bluetoothAdapter.isDiscovering()){
+                    Toast.makeText(this, "Haciendo reconocible su dispositivo", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent((BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE));
+                    someActivityResultLauncher.launch(intent);
+                }
                 break;
             case R.id.btEmparejados:
                 break;
