@@ -6,4 +6,8 @@
     <string name="bt_off">Bluetooth Off</string>
     <string name="bt_explorar">Hacer Visible</string>
     <string name="bt_emparejados">Dispositivos Emparejados</string>
+    <string name="title_activity_lista_dispositivos">ListaDispositivos</string>
+    <string name="texto_dispositivos">Elige el dispositivo</string>
+    <string name="texto_no_hay_dispositivos">No hay dispositivos cerca</string>
+
 </resources>

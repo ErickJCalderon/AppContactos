@@ -85,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.btEmparejados:
+                if(bluetoothAdapter.isEnabled()){
+                    Intent intent = new Intent(MainActivity.this, ListaDispositivos.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(this, "Por favor, conecta el bluetooth", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -94,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
         final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
         if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_REQUIRED_PERMISSIONS);
-            return;
         }
     }
 
