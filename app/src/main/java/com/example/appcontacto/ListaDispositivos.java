@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Window;
 import android.app.Activity;
 import android.os.Bundle;
@@ -83,6 +84,7 @@ public class ListaDispositivos extends AppCompatActivity {
         } else
         {
             dispositivosEmparejadosArray.add(getString(R.string.texto_no_hay_dispositivos));
+
         }
 
 

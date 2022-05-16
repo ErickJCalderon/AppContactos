@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +57,23 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_conexion, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case Constants.CONNECT_DEVICE_INSECURE:
+                break;
+            case Constants.CONNECT_DEVICE_SECURE:
+                if (resultCode == Activity.RESULT_OK){
+
+                    String macAddress = Objects.requireNonNull(data.getExtras()).getString(ListaDispositivos.EXTRA_DEVICE_ADDRESS);
+                    Log.d("MI DATO", macAddress);
+                }
+        }
+
     }
 
     @SuppressLint("MissingPermission")
@@ -87,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btEmparejados:
                 if(bluetoothAdapter.isEnabled()){
                     Intent intent = new Intent(MainActivity.this, ListaDispositivos.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, Constants.CONNECT_DEVICE_SECURE);
                 }else{
                     Toast.makeText(this, "Por favor, conecta el bluetooth", Toast.LENGTH_SHORT).show();
                 }
