@@ -67,16 +67,18 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "El Bluetooth ya esta encendido", Toast.LENGTH_SHORT).show();
                 }
+                break;
             case R.id.btOff:
                 if (bluetoothAdapter.isEnabled()) {
-                    Toast.makeText(this, "Apagando Bluetooth", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(String.valueOf(BluetoothAdapter.STATE_TURNING_OFF));
-                    someActivityResultLauncher.launch(intent);
+                    bluetoothAdapter.disable();
                 } else {
                     Toast.makeText(this, "El Bluetooth ya esta apagado", Toast.LENGTH_SHORT).show();
                 }
+                break;
             case R.id.btExplorar:
+                break;
             case R.id.btEmparejados:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
