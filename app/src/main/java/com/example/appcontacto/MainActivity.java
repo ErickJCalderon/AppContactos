@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Contacto> contactos;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-    private static final String TAG = "MainActivity";
-    private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -63,15 +61,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
-            case Constants.CONNECT_DEVICE_INSECURE:
-                break;
-            case Constants.CONNECT_DEVICE_SECURE:
-                if (resultCode == Activity.RESULT_OK){
-
-                    String macAddress = Objects.requireNonNull(data.getExtras()).getString(ListaDispositivos.EXTRA_DEVICE_ADDRESS);
-                    Log.d("MI DATO", macAddress);
-                }
+        try {
+            switch (requestCode){
+                case Constants.CONNECT_DEVICE_INSECURE:
+                    break;
+                case Constants.CONNECT_DEVICE_SECURE:
+                    if (resultCode == Activity.RESULT_OK){
+                        String macAddress = Objects.requireNonNull(data.getExtras()).getString(ListaDispositivos.EXTRA_DEVICE_ADDRESS);
+                        Log.d("MI DATO", macAddress);
+                    }
+            }
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
         }
 
     }
@@ -115,12 +116,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void requestLocationPermission() {
+    //metodo para comprobar permisos
+    /*private void requestLocationPermission() {
         final String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
         if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE_REQUIRED_PERMISSIONS);
         }
-    }
+    }*/
 
 
 
