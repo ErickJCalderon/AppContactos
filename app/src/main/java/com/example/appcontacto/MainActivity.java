@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     TextView warning;
-    ArrayList<Contacto> contactos  = new ArrayList<Contacto>();;
+    ArrayList<Contacto> contactos  = new ArrayList<Contacto>();
     MainAdapter adapter;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
