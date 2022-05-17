@@ -2,15 +2,15 @@ package com.example.appcontacto;
 
 public class Contacto {
     String nombre;
-    String apellido;
-    String email;
-    int telefono;
+    String numero;
 
-    public Contacto(String nombre, String apellido, String email, int telefono) {
+    public Contacto(String nombre, String numero) {
         this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono;
+        this.numero = numero;
+    }
+
+    public Contacto() {
+
     }
 
     public String getNombre() {
@@ -21,28 +21,12 @@ public class Contacto {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
 
