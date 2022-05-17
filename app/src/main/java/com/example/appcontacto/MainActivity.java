@@ -1,5 +1,7 @@
 package com.example.appcontacto;
 
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,22 +22,21 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    TextView warning;
     ArrayList<Contacto> contactos  = new ArrayList<>();
     MainAdapter adapter;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -128,17 +130,24 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
                     1);
         }
+        //Asignamos la Recycler View
+        recyclerView= findViewById(R.id.rcView);
 
-
-        setContentView(R.layout.activity_main);
-
+        //Check de los permisos
         checkPermission();
-        if (bluetoothAdapter == null) {
-            warning.setText("No hay soporte Bluetooth para su dispositivo");
-        } else {
-            warning.setText("Su dispositvo cuenta con soporte Bluetooth");
-        }
 
+        /*recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, DetalleContacto.class);
+                        intent.putExtra("NOMBRECONTACTO", )
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                    }
+                })
+        );*/
 
     }
 
@@ -161,46 +170,59 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
 
         //Ordenacion de manera ascendente
-        String sort = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"ASC";
+        //String sort = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"ASC";
 
         //Iniciamos un cursor, para recorrer la lista
-        Cursor cursor = getContentResolver().query(uri,null,null,null,sort);
+        Cursor cursor = getContentResolver().query(uri,null,null,null,null);
 
-        if(cursor.getCount()>0){
+        if(cursor.getCount() > 0){
             //mientras el cursor sea mayor a 0
             //usamos un bucle while para movernos dentro
 
             while(cursor.moveToNext()){
-                //Id del contacto
-                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-                //Nombre del contacto
-                String nombre = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                Cursor tlfCursor=null;
+                try {
+                    //Id del contacto
+                    String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                    //Nombre del contacto
+                    String nombre = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
 
-                //Iniciamos el Uri del telefono
-                Uri uriphone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+                    //Iniciamos el Uri del telefono
+                    Uri uriphone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
-                //Iniciamos una seleccion
-                String seleccion = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?";
+                    //Iniciamos una seleccion
+                    String seleccion = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?";
 
-                //Iniciamos un cursor para el telefono
-                Cursor tlfCursor = getContentResolver().query(uriphone, null, seleccion, new String[]{id},null);
+                    //Iniciamos un cursor para el telefono
+                    tlfCursor = getContentResolver().query(uriphone, null, seleccion, new String[]{id},null);
 
-                //Condicion de comprobacion
-                if(cursor.moveToNext()){
                     //Cuando se mueve el cursor
-                    String numero = tlfCursor.getString(tlfCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    while(tlfCursor.moveToNext()){
+                        try {
+                            String numero = tlfCursor.getString(tlfCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-                    //Inicializamos un modelo
-                    Contacto contacto = new Contacto();
+                            //Inicializamos un modelo
+                            Contacto contacto = new Contacto();
 
-                    //establecemos el nombre y el telefono y lo añadimos al array
-                    contacto.setNombre(nombre);
-                    contacto.setNumero(" " + numero);
-                    contactos.add(contacto);
+                            //establecemos el nombre y el telefono y lo añadimos al array
+                            contacto.setNombre(nombre);
+                            contacto.setNumero(numero);
+                            contactos.add(contacto);
+                        }catch (IndexOutOfBoundsException ex){
+                            ex.printStackTrace();
+                        }
 
-                    //cerramos el cursor
-                    tlfCursor.close();
-                }
+                    }
+
+                    }catch (IndexOutOfBoundsException ex){
+                        ex.printStackTrace();
+                    }
+                    finally {
+                    if(tlfCursor!=null)
+                        tlfCursor.close();
+                    }
+
+
 
             }
             cursor.close();
@@ -209,10 +231,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Establecemos el adapter
-        adapter = new MainAdapter(this, contactos);
+        adapter = new MainAdapter(this, contactos, new MainAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Contacto contacto) {
+                Intent intent = new Intent(MainActivity.this, DetalleContacto.class);
+                intent.putExtra("NOMBRECONTACTO", contacto.getNombre());
+                intent.putExtra("NUMERO", contacto.getNumero());
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
+    private void showToast(String string){
+        Toast.makeText(this, string,Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

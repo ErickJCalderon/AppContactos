@@ -14,10 +14,14 @@ import java.util.ArrayList;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     Activity activity;
     ArrayList <Contacto> arrayList;
+    private ItemClickListener itemClickListener;
 
-    public MainAdapter(Activity activity, ArrayList<Contacto> arrayList) {
+
+
+    public MainAdapter(Activity activity, ArrayList<Contacto> arrayList, ItemClickListener itemClickListener) {
         this.activity = activity;
         this.arrayList = arrayList;
+        this.itemClickListener= itemClickListener;
         notifyDataSetChanged();
     }
 
@@ -35,6 +39,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         holder.tvNombre.setText(contacto.getNombre());
         holder.tvNumero.setText(contacto.getNumero());
+
+        //Esto devolvera la posicion del item en el RecyclerView
+        holder.itemView.setOnClickListener(view -> {
+           itemClickListener.onItemClick(arrayList.get(position));
+        });
     }
 
     @Override
@@ -42,14 +51,21 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return arrayList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public interface ItemClickListener {
+        void onItemClick(Contacto contacto);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvNombre, tvNumero;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvNombre = itemView.findViewById(R.id.tv_nombre);
             tvNumero = itemView.findViewById(R.id.tv_numero);
         }
+
     }
+
 }
