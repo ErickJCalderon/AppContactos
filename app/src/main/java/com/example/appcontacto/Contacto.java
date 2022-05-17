@@ -2,11 +2,16 @@ package com.example.appcontacto;
 
 public class Contacto {
     String nombre;
+    String apellido;
+    String email;
     String numero;
 
-    public Contacto(String nombre, String numero) {
+    public Contacto(String nombre, String apellido, String email, String numero) {
         this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
         this.numero = numero;
+
     }
 
     public Contacto() {
@@ -29,5 +34,19 @@ public class Contacto {
         this.numero = numero;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
 
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

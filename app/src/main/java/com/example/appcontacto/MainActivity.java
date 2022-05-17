@@ -169,11 +169,9 @@ public class MainActivity extends AppCompatActivity {
         //Iniciamos una Uri
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
 
-        //Ordenacion de manera ascendente
-        //String sort = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"ASC";
 
         //Iniciamos un cursor, para recorrer la lista
-        Cursor cursor = getContentResolver().query(uri,null,null,null,null);
+        Cursor cursor = getContentResolver().query(uri,null,null,null, null);
 
         if(cursor.getCount() > 0){
             //mientras el cursor sea mayor a 0
@@ -186,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
                     String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
                     //Nombre del contacto
                     String nombre = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                    //Apellido del contacto
+
 
                     //Iniciamos el Uri del telefono
                     Uri uriphone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
                     while(tlfCursor.moveToNext()){
                         try {
                             String numero = tlfCursor.getString(tlfCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
                             //Inicializamos un modelo
                             Contacto contacto = new Contacto();
 
@@ -237,15 +236,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, DetalleContacto.class);
                 intent.putExtra("NOMBRECONTACTO", contacto.getNombre());
                 intent.putExtra("NUMERO", contacto.getNumero());
+                intent.putExtra("APELLIDOCONTACTO", contacto.getApellido());
+                intent.putExtra("EMAILCONTACTO", contacto.getEmail());
                 startActivity(intent);
             }
         });
         recyclerView.setAdapter(adapter);
     }
 
-    private void showToast(String string){
-        Toast.makeText(this, string,Toast.LENGTH_SHORT).show();
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
