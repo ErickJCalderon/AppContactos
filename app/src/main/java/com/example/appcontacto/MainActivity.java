@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btEmparejados:
                 if(bluetoothAdapter.isEnabled()){
                     Intent intent = new Intent(MainActivity.this, ListaDispositivos.class);
-                    startActivityForResult(intent, Constants.CONNECT_DEVICE_SECURE);
+                    someActivityResultLauncher.launch(intent);
                 }else{
                     Toast.makeText(this, "Por favor, conecta el bluetooth", Toast.LENGTH_SHORT).show();
                 }
