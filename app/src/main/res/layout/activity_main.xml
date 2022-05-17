@@ -10,13 +10,21 @@
         android:id="@+id/lvContactos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rcView"
+        tools:listitem="@layout/item_contact"
+        />
+
     <Button
         android:id="@+id/btBoton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="@string/boton_transferir"/>
+        android:text="@string/boton_transferir" />
     <TextView
         android:id="@+id/btStatus"
         android:layout_width="wrap_content"
