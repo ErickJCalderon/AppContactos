@@ -26,7 +26,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     TextView warning;
-    ArrayList<Contacto> contactos  = new ArrayList<Contacto>();
+    ArrayList<Contacto> contactos  = new ArrayList<>();
     MainAdapter adapter;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -65,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        try {
             switch (requestCode){
                 case Constants.CONNECT_DEVICE_INSECURE:
                     break;
@@ -76,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MI DATO", macAddress);
                     }
             }
-        }catch (NullPointerException ex){
-            ex.printStackTrace();
-        }
 
     }
 
