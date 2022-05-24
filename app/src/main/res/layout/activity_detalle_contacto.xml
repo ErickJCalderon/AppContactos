@@ -16,30 +16,41 @@
         android:layout_marginTop="20dp"
         android:text="Renata" />
 
-    <TextView
-        android:id="@+id/tvApellido"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/relativeCall"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Glassc" />
+        android:layout_marginEnd="20dp"
+        >
 
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="renata.glassc@meloinvento.com" />
+        <TextView
+            android:id="@+id/tvTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:text="632512456"
+            android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/tvTelefono"
+        <ImageView
+            android:id="@+id/imagenTLF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_phone_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+             />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/botonLlamar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="632512456" />
+        android:layout_marginTop="10dp"
+        android:text="Llamar contacto"
+        android:layout_gravity="center"
+        android:onClick="llamar"
+        />
+
 </LinearLayout>
