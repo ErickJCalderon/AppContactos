@@ -18,6 +18,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
 
 
+
     public MainAdapter(Activity activity, ArrayList<Contacto> arrayList, ItemClickListener itemClickListener) {
         this.activity = activity;
         this.arrayList = arrayList;

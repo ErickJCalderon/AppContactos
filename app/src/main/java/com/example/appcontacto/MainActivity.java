@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     MainAdapter adapter;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Button botonSeleccionar;
-
+    private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
 
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
