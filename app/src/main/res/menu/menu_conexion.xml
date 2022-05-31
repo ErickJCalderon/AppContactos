@@ -11,6 +11,9 @@
     <item android:id="@+id/btExplorar"
         android:title="@string/bt_explorar"
         app:showAsAction="never"/>
+    <item android:id="@+id/btNoEmparejados"
+        android:title="Encontrar Dispositivos"
+        app:showAsAction="never"/>
     <item android:id="@+id/btEmparejados"
         android:title="@string/bt_emparejados"
         app:showAsAction="never"/>
