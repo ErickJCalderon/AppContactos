@@ -13,14 +13,26 @@
         android:id="@+id/rcView"
         tools:listitem="@layout/item_contact"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/startConnection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Iniciar Conexion"
+            android:layout_margin="10dp"/>
 
-    <Button
-        android:id="@+id/btBoton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="@string/boton_transferir"
-        android:onClick="seleccionarContacto"/>
+        <Button
+            android:id="@+id/btBoton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:onClick="seleccionarContacto"
+            android:text="@string/boton_transferir" />
+    </LinearLayout>
 
 </LinearLayout>

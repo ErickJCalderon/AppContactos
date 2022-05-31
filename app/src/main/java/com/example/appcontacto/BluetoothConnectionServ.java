@@ -30,10 +30,10 @@ public class BluetoothConnectionServ {
     ProgressDialog miProgressDialogo;
 
 
-
     public BluetoothConnectionServ(Context context) {
         this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         this.context = context;
+        start();
     }
 
     /**
@@ -67,30 +67,29 @@ public class BluetoothConnectionServ {
         public void run() {
             Log.d(TAG, "Ejecutando: AcceptThread ejecutando");
             BluetoothSocket socket = null;
-            while (true) {
-                try {
-                    Log.d(TAG, "Ejecutando: RFCOM iniciando server socket ");
-                    socket = btSSocket.accept();
-                    Log.d(TAG, "Ejecutando: RFCOM conexion aceptada");
-                } catch (IOException e) {
-                    Log.e(TAG, "AcceptThread: IOException" + e.getMessage());
-                }
-                if (socket != null) {
-                    connected(socket, mbtDevice);
-                }
-                Log.d(TAG, "Termian acceptThread");
+            try {
+                Log.d(TAG, "Ejecutando: RFCOM iniciando server socket ");
+                socket = btSSocket.accept();
+                Log.d(TAG, "Ejecutando: RFCOM conexion aceptada");
+            } catch (IOException e) {
+                Log.e(TAG, "AcceptThread: IOException" + e.getMessage());
             }
+            if (socket != null) {
+                connected(socket, mbtDevice);
+            }
+            Log.d(TAG, "Termian acceptThread");
+
         }
 
         /**
          * Cancela todo tipo de ejecucion
          */
-        public void cancel(){
-            Log.d(TAG,"Cancelando AcceptThread");
-            try{
+        public void cancel() {
+            Log.d(TAG, "Cancelando AcceptThread");
+            try {
                 btSSocket.close();
-            }catch (IOException e){
-                Log.e(TAG,"Cancelando AcceptThread. ServerSocket fallo" + e.getMessage());
+            } catch (IOException e) {
+                Log.e(TAG, "Cancelando AcceptThread. ServerSocket fallo" + e.getMessage());
             }
         }
     }
@@ -151,37 +150,37 @@ public class BluetoothConnectionServ {
     }
 
 
-
     /**
- * Esto inicia especificamente el AcceptThread para empezar una sesion en el listening mode
- * Se ejecuta en el Activity onResume()
- * Si la conexion es distinto de null, cancela la que se este ejecutando y lanza una nueva vacia
- * Si la conexion es null, crea una nueva y la lanza
- */
-public synchronized void start(){
-    Log.d(TAG, "start");
-    if(connectThread!=null){
-        connectThread.cancel();
-        connectThread = null;
+     * Esto inicia especificamente el AcceptThread para empezar una sesion en el listening mode
+     * Se ejecuta en el Activity onResume()
+     * Si la conexion es distinto de null, cancela la que se este ejecutando y lanza una nueva vacia
+     * Si la conexion es null, crea una nueva y la lanza
+     */
+    public synchronized void start() {
+        Log.d(TAG, "start");
+        if (connectThread != null) {
+            connectThread.cancel();
+            connectThread = null;
+        }
+        if (acceptThread == null) {
+            acceptThread = new AcceptThread();
+            acceptThread.start();
+        }
     }
-    if(acceptThread==null){
-        acceptThread = new AcceptThread();
-        acceptThread.start();
-    }
-}
 
     /**
      * Este metodo incia ConnectThread
+     *
      * @param device el dispositivo que recibe
-     * @param uuid la uuid para hacer posible esa conexion
+     * @param uuid   la uuid para hacer posible esa conexion
      */
-public void startClient(BluetoothDevice device, UUID uuid){
-    Log.d(TAG, "Start Client");
+    public void startClient(BluetoothDevice device, UUID uuid) {
+        Log.d(TAG, "Start Client");
 
-    miProgressDialogo = ProgressDialog.show(context, "Conectando Bluetooth",
-            "Espere por favor...", true);
-    connectThread = new ConnectThread(device,uuid);
-    connectThread.start();
+        miProgressDialogo = ProgressDialog.show(context, "Conectando Bluetooth",
+                "Espere por favor...", true);
+        connectThread = new ConnectThread(device, uuid);
+        connectThread.start();
     }
 
 
@@ -189,7 +188,7 @@ public void startClient(BluetoothDevice device, UUID uuid){
      * Clase que es responsable de manejar los procesos de conexion del BtConnection,
      * eviando y recibiendo la informacion
      */
-    private class ConnectedThread extends Thread{
+    private class ConnectedThread extends Thread {
         private BluetoothSocket btSocket;
         private InputStream inputStream;
         private OutputStream outputStream;
@@ -199,12 +198,16 @@ public void startClient(BluetoothDevice device, UUID uuid){
             InputStream tmpInputS = null;
             OutputStream tmpOutputS = null;
 
-            miProgressDialogo.dismiss();
+            try {
+                miProgressDialogo.dismiss();
+            }catch (NullPointerException e){
+                e.printStackTrace();
+            }
 
-            try{
+            try {
                 tmpInputS = btSocket.getInputStream();
                 tmpOutputS = btSocket.getOutputStream();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             inputStream = tmpInputS;
@@ -212,18 +215,18 @@ public void startClient(BluetoothDevice device, UUID uuid){
         }
 
         /**
-         *Esperando hasta que el inputStream de algun error
+         * Esperando hasta que el inputStream de algun error
          */
-        public void run(){
+        public void run() {
             byte[] buffer = new byte[1024];
             int bytes;
-            while(true){
-                try{
+            while (true) {
+                try {
                     bytes = inputStream.read(buffer);
                     String incomingMessage = new String(buffer, 0, bytes);
-                    Log.d(TAG,"InputStream: " + incomingMessage);
-                }catch (IOException e){
-                    Log.e(TAG, "Error leyendo input: "+ e.getMessage());
+                    Log.d(TAG, "InputStream: " + incomingMessage);
+                } catch (IOException e) {
+                    Log.e(TAG, "Error leyendo input: " + e.getMessage());
                     break;
                 }
             }
@@ -231,15 +234,16 @@ public void startClient(BluetoothDevice device, UUID uuid){
 
         /**
          * LLamar a este metodo desde la main activity para enviar datos a otro dispositivo
+         *
          * @param bytes
          */
-        public void write(byte[] bytes){
+        public void write(byte[] bytes) {
             String text = new String(bytes, Charset.defaultCharset());
-            Log.d(TAG,"Escribiendo OutputStream: "+ text);
+            Log.d(TAG, "Escribiendo OutputStream: " + text);
             try {
                 outputStream.write(bytes);
             } catch (IOException e) {
-                Log.e(TAG, "Error escribiendo OutputStream: "+ e.getMessage());
+                Log.e(TAG, "Error escribiendo OutputStream: " + e.getMessage());
 
             }
         }
@@ -247,7 +251,7 @@ public void startClient(BluetoothDevice device, UUID uuid){
         /**
          * Llamar a este metodo desde la main activity para cancelar cualquier proceso
          */
-        public void cancel(){
+        public void cancel() {
             try {
                 btSocket.close();
             } catch (IOException e) {
@@ -258,7 +262,6 @@ public void startClient(BluetoothDevice device, UUID uuid){
     }
 
     /**
-     *
      * @param btSocket
      * @param mbtDevice
      */
@@ -271,10 +274,11 @@ public void startClient(BluetoothDevice device, UUID uuid){
 
     /**
      * Escribe en el ConnectedThread
+     *
      * @param out los bytes que se van a escribir
      * @see ConnectedThread#write(byte[])
      */
-    public void write(byte[] out){
+    public void write(byte[] out) {
         ConnectedThread tmpConnectedThread;
 
         //Llamada al write

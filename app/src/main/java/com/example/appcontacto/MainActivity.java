@@ -36,6 +36,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -48,7 +50,13 @@ public class MainActivity extends AppCompatActivity {
     MainAdapter adapter;
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Button botonSeleccionar;
+    Button iniConect;
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
+    BluetoothConnectionServ bluetoothConnection;
+    BluetoothDevice bluetoothDevice;
+    String contact;
+
+
 
 
 
@@ -75,20 +83,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (requestCode == 1 && requestCode == RESULT_OK) {
             Uri uri = data.getData();
             Cursor cursor = getContentResolver().query(uri, null, null
                     , null
                     , null);
 
+
             if (cursor != null && cursor.moveToFirst()) {
                 int indiceNombre = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
                 int indiceNumero = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-                String nombre = cursor.getString(indiceNombre);
-                String numero = cursor.getString(indiceNumero);
+                contact = cursor.getString(indiceNombre)+";"+cursor.getString(indiceNumero);
 
             }
+
             cursor.close();
         }
 
@@ -101,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("MI DATO", macAddress);
                 }
         }
-
     }
 
     @SuppressLint("MissingPermission")
@@ -164,6 +174,19 @@ public class MainActivity extends AppCompatActivity {
 
         botonSeleccionar = findViewById(R.id.btBoton);
 
+        iniConect = findViewById(R.id.startConnection);
+
+        iniConect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startConnection();
+            }
+        });
+
+    }
+
+    public void startConnection(){
+        startBtConnection(bluetoothDevice,INSECURE_UUID);
     }
 
     private void checkPermission() {
@@ -272,10 +295,11 @@ public class MainActivity extends AppCompatActivity {
     public void seleccionarContacto(View v) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-        BluetoothConnectionServ btConnectServ = new BluetoothConnectionServ(MainActivity.this);
-
         startActivityForResult(intent, 1);
     }
 
+    public void startBtConnection(BluetoothDevice device, UUID uuid){
+        bluetoothConnection.startClient(device,uuid);
+    }
 
 }

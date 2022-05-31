@@ -21,6 +21,8 @@ import java.util.Set;
 public class ListaDispositivos extends AppCompatActivity {
 
     ListView lista_dispositivos;
+    BluetoothConnectionServ bluetoothConnectionServ;
+    BluetoothDevice btDevice;
 
     public static final String EXTRA_DEVICE_ADDRESS = "device_address";
     private BluetoothAdapter bluetoothAdapter;
@@ -53,7 +55,6 @@ public class ListaDispositivos extends AppCompatActivity {
 
         ArrayAdapter<String> dispositivosEmparejadosArray = new ArrayAdapter<>(this, R.layout.item_list_devices);
 
-        @SuppressLint("MissingPermission")
         final AdapterView.OnItemClickListener dispositivoClickListener = (av, view, position, id) -> {
             bluetoothAdapter.cancelDiscovery();
 
@@ -63,7 +64,6 @@ public class ListaDispositivos extends AppCompatActivity {
                 String address = info.substring(info.length() - 17 );
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
@@ -80,11 +80,11 @@ public class ListaDispositivos extends AppCompatActivity {
         if(dispositivosVinculados.size() > 0 ){
             for (BluetoothDevice device: dispositivosVinculados){
                 dispositivosEmparejadosArray.add(device.getName() + "\n" + device.getAddress());
+                device.createBond();
             }
         } else
         {
             dispositivosEmparejadosArray.add(getString(R.string.texto_no_hay_dispositivos));
-
         }
 
 
