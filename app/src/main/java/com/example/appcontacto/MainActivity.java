@@ -1,6 +1,8 @@
 package com.example.appcontacto;
 
 
+import static android.bluetooth.BluetoothAdapter.*;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,7 +23,10 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,17 +43,17 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    String TAG = "App Contactos";
     RecyclerView recyclerView;
     ArrayList<Contacto> contactos = new ArrayList<>();
     MainAdapter adapter;
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    BluetoothAdapter bluetoothAdapter = getDefaultAdapter();
     Button botonSeleccionar;
     Button iniConect;
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
@@ -56,22 +61,6 @@ public class MainActivity extends AppCompatActivity {
     BluetoothDevice bluetoothDevice;
     String contact;
 
-
-
-
-
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-
-                    }
-                }
-            });
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 int indiceNombre = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
                 int indiceNumero = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-                contact = cursor.getString(indiceNombre)+";"+cursor.getString(indiceNumero);
+                contact = cursor.getString(indiceNombre) + ";" + cursor.getString(indiceNumero);
 
             }
 
@@ -114,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @SuppressLint("MissingPermission")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -121,8 +111,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btOn:
                 if (!bluetoothAdapter.isEnabled()) {
                     Toast.makeText(this, "Encendiendo Bluetooth", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    someActivityResultLauncher.launch(intent);
+                    Intent intent = new Intent(ACTION_REQUEST_ENABLE);
+                    startActivityForResult(intent, 1);
+
+                    IntentFilter btIntent = new IntentFilter(ACTION_STATE_CHANGED);
+                    registerReceiver(broadCastReciver1, btIntent);
                 } else {
                     Toast.makeText(this, "El Bluetooth ya esta encendido", Toast.LENGTH_SHORT).show();
                 }
@@ -130,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btOff:
                 if (bluetoothAdapter.isEnabled()) {
                     bluetoothAdapter.disable();
+                    Toast.makeText(this, "Apagando Bluetooth", Toast.LENGTH_SHORT).show();
+                    IntentFilter btIntent = new IntentFilter(ACTION_STATE_CHANGED);
+                    registerReceiver(broadCastReciver1, btIntent);
                 } else {
                     Toast.makeText(this, "El Bluetooth ya esta apagado", Toast.LENGTH_SHORT).show();
                 }
@@ -137,14 +133,18 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btExplorar:
                 if (!bluetoothAdapter.isDiscovering()) {
                     Toast.makeText(this, "Haciendo reconocible su dispositivo", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent((BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE));
-                    someActivityResultLauncher.launch(intent);
+                    Intent intent = new Intent((ACTION_REQUEST_DISCOVERABLE));
+                    startActivityForResult(intent, 1);
+                    IntentFilter btIntent = new IntentFilter(ACTION_STATE_CHANGED);
+                    registerReceiver(broadCastReciver1, btIntent);
                 }
                 break;
             case R.id.btEmparejados:
                 if (bluetoothAdapter.isEnabled()) {
                     Intent intent = new Intent(MainActivity.this, ListaDispositivos.class);
-                    someActivityResultLauncher.launch(intent);
+                    startActivityForResult(intent, 1);
+                    IntentFilter btIntent = new IntentFilter(ACTION_STATE_CHANGED);
+                    registerReceiver(broadCastReciver1, btIntent);
                 } else {
                     Toast.makeText(this, "Por favor, conecta el bluetooth", Toast.LENGTH_SHORT).show();
                 }
@@ -185,8 +185,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void startConnection(){
-        startBtConnection(bluetoothDevice,INSECURE_UUID);
+    public void startBtConnection(BluetoothDevice device, UUID uuid) {
+        bluetoothConnection.startClient(device, uuid);
+    }
+
+    public void startConnection() {
+        startBtConnection(bluetoothDevice, INSECURE_UUID);
     }
 
     private void checkPermission() {
@@ -202,6 +206,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Obetiene la lista de contactos del dispositivo movil donde este instalada la aplicacion
+     */
     private void getListaContacto() {
         //Iniciamos una Uri
         Uri uri = ContactsContract.Contacts.CONTENT_URI;
@@ -298,8 +305,29 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
-    public void startBtConnection(BluetoothDevice device, UUID uuid){
-        bluetoothConnection.startClient(device,uuid);
-    }
-
+    /**
+     * Crear un BroadcastReciver for ACTION_FOUND a la variable bluetoothAdapter
+     */
+    private final BroadcastReceiver broadCastReciver1 = new BroadcastReceiver() {
+        public void onReceive(Context context, @NonNull Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(bluetoothAdapter.ACTION_STATE_CHANGED)) {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, bluetoothAdapter.ERROR);
+                switch (state) {
+                    case BluetoothAdapter.STATE_OFF:
+                        Log.d(TAG,"State: Off");
+                        break;
+                    case STATE_TURNING_OFF:
+                        Log.d(TAG,"State: Turning Off");
+                        break;
+                    case STATE_ON:
+                        Log.d(TAG,"State: On");
+                        break;
+                    case STATE_TURNING_ON:
+                        Log.d(TAG,"State: Turning On");
+                        break;
+                }
+            }
+        }
+    };
 }

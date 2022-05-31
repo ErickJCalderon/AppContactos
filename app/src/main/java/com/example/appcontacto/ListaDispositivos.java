@@ -60,6 +60,7 @@ public class ListaDispositivos extends AppCompatActivity {
 
             String info = ((TextView) view).getText().toString();
 
+
             if(info.length() > 16 ){
                 String address = info.substring(info.length() - 17 );
                 Intent intent = new Intent();
@@ -81,11 +82,14 @@ public class ListaDispositivos extends AppCompatActivity {
             for (BluetoothDevice device: dispositivosVinculados){
                 dispositivosEmparejadosArray.add(device.getName() + "\n" + device.getAddress());
                 device.createBond();
+                bluetoothConnectionServ = new BluetoothConnectionServ(ListaDispositivos.this);
             }
         } else
         {
             dispositivosEmparejadosArray.add(getString(R.string.texto_no_hay_dispositivos));
         }
+
+
 
 
 
