@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
 
 
+
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -271,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
     public void seleccionarContacto(View v) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        BluetoothConnectionServ btConnectServ = new BluetoothConnectionServ(MainActivity.this);
+
         startActivityForResult(intent, 1);
     }
 
