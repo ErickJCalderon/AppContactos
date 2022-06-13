@@ -24,17 +24,24 @@ public class BluetoothConnectionServ {
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
 
     private final BluetoothAdapter bluetoothAdapter;
+    /**
+     * The Context.
+     */
     Context context;
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
     private ConnectedThread connectedThread;
     private BluetoothDevice mbtDevice;
     private UUID deviceUUID;
+    /**
+     * The Mi progress dialogo.
+     */
     ProgressDialog miProgressDialogo;
 
 
     /**
      * Constructor de la clase
+     *
      * @param context Contexto que recibe para interactuar con la clase
      */
     public BluetoothConnectionServ(Context context) {
@@ -108,6 +115,12 @@ public class BluetoothConnectionServ {
     private class ConnectThread extends Thread {
         private BluetoothSocket btSocket;
 
+        /**
+         * Instantiates a new Connect thread.
+         *
+         * @param btDevice the bt device
+         * @param uuid     the uuid
+         */
         public ConnectThread(BluetoothDevice btDevice, UUID uuid) {
             mbtDevice = btDevice;
             deviceUUID = uuid;
@@ -205,6 +218,11 @@ public class BluetoothConnectionServ {
         private InputStream inputStream;
         private OutputStream outputStream;
 
+        /**
+         * Instantiates a new Connected thread.
+         *
+         * @param btSocket the bt socket
+         */
         public ConnectedThread(BluetoothSocket btSocket) {
             this.btSocket = btSocket;
             InputStream tmpInputS = null;
@@ -289,7 +307,7 @@ public class BluetoothConnectionServ {
      * Escribe en el ConnectedThread
      *
      * @param out los bytes que se van a escribir
-     * @see ConnectedThread#write(byte[])
+     * @see ConnectedThread#write(byte[]) ConnectedThread#write(byte[])ConnectedThread#write(byte[])
      */
     public void write(byte[] out) {
         ConnectedThread tmpConnectedThread;

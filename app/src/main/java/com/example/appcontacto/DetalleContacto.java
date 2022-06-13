@@ -18,9 +18,24 @@ import android.widget.Toast;
  */
 public class DetalleContacto extends AppCompatActivity {
 
-    TextView tvNombre, tvTelefono;
+    /**
+     * The Tv nombre.
+     */
+    TextView tvNombre, /**
+     * The Tv telefono.
+     */
+    tvTelefono;
+    /**
+     * The Relative layout.
+     */
     RelativeLayout relativeLayout;
+    /**
+     * The Numero contacto.
+     */
     String numeroContacto;
+    /**
+     * The Boton llamar.
+     */
     Button botonLlamar;
 
 
@@ -52,6 +67,7 @@ public class DetalleContacto extends AppCompatActivity {
 
     /**
      * Metodo que controla la accion de llamada del boton referente al mismo, dentro del layout
+     *
      * @param v View a la que se refiera
      */
     public void llamar(View v){

@@ -24,9 +24,10 @@ public class DeviceListApadapter extends ArrayAdapter<BluetoothDevice> {
 
     /**
      * Constructor del DeviceListAdapter
-     * @param context View donde esta contenida
+     *
+     * @param context      View donde esta contenida
      * @param tvResourceId Id del componente donde se va mostrar la informacion
-     * @param devices ArrayList de objetos BluetoothDevice
+     * @param devices      ArrayList de objetos BluetoothDevice
      */
     public DeviceListApadapter(Context context, int tvResourceId, ArrayList<BluetoothDevice> devices){
         super(context, tvResourceId,devices);

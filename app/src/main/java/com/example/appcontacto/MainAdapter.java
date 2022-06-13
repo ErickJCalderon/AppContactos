@@ -15,15 +15,22 @@ import java.util.ArrayList;
  * Clase controladora del RecyclerView establecido en el activity_main
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
+    /**
+     * The Activity.
+     */
     Activity activity;
+    /**
+     * The Array list.
+     */
     ArrayList <Contacto> arrayList;
     private ItemClickListener itemClickListener;
 
 
     /**
      * Contructor del MainAdapter
-     * @param activity Activity en la que se encuentra
-     * @param arrayList ArrayList que implementa
+     *
+     * @param activity          Activity en la que se encuentra
+     * @param arrayList         ArrayList que implementa
      * @param itemClickListener ItemClickListener el cual va a referenciar para su uso
      */
     public MainAdapter(Activity activity, ArrayList<Contacto> arrayList, ItemClickListener itemClickListener) {
@@ -77,6 +84,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
      * Interfaz que implementa el clickListener de cada item
      */
     public interface ItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param contacto the contacto
+         */
         void onItemClick(Contacto contacto);
     }
 
@@ -85,10 +97,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
      */
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvNombre, tvNumero;
+        /**
+         * The Tv nombre.
+         */
+        TextView tvNombre, /**
+         * The Tv numero.
+         */
+        tvNumero;
 
         /**
          * Constructor del ViewHolder
+         *
          * @param itemView View a la que se refiere
          */
         public ViewHolder(@NonNull View itemView) {

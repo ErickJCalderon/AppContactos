@@ -30,13 +30,28 @@ import java.util.Set;
  */
 public class ListaDispositivos extends Activity {
 
+    /**
+     * The Lista dispositivos.
+     */
     ListView lista_dispositivos;
 
 
+    /**
+     * The constant EXTRA_DEVICE_ADDRESS.
+     */
     public static final String EXTRA_DEVICE_ADDRESS = "device_address";
     private BluetoothAdapter bluetoothAdapter;
+    /**
+     * The Dispositivos emparejados array.
+     */
     ArrayAdapter<String> dispositivosEmparejadosArray;
+    /**
+     * The Dispositivos vinculados.
+     */
     Set<BluetoothDevice> dispositivosVinculados;
+    /**
+     * The List.
+     */
     ArrayList list = new ArrayList();
 
 

@@ -46,17 +46,50 @@ import java.util.UUID;
  */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * The Tag.
+     */
     String TAG = "App Contactos";
+    /**
+     * The Recycler view.
+     */
     RecyclerView recyclerView;
+    /**
+     * The Contactos.
+     */
     ArrayList<Contacto> contactos = new ArrayList<>();
+    /**
+     * The Adapter.
+     */
     MainAdapter adapter;
+    /**
+     * The Bluetooth adapter.
+     */
     BluetoothAdapter bluetoothAdapter = getDefaultAdapter();
+    /**
+     * The Boton seleccionar.
+     */
     Button botonSeleccionar;
+    /**
+     * The Ini conect.
+     */
     Button iniConect;
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
+    /**
+     * The Bluetooth connection.
+     */
     BluetoothConnectionServ bluetoothConnection;
+    /**
+     * The Bluetooth device.
+     */
     BluetoothDevice bluetoothDevice;
+    /**
+     * The Bluetooth devices.
+     */
     public ArrayList<BluetoothDevice> bluetoothDevices = new ArrayList<>();
+    /**
+     * The Contact.
+     */
     String contact;
 
 
@@ -255,8 +288,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Metodo que se implementa en el boton INICIAR CONEXION para volver a comprobar si la conexion se ha establecido
+     *
      * @param device Dispositivo al cual conectar
-     * @param uuid uuid referente al dispositivo
+     * @param uuid   uuid referente al dispositivo
      */
     public void startBtConnection(BluetoothDevice device, UUID uuid) {
         try {
@@ -395,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Metodo que controla la seleccion de un contacto establecido en la MainActivity
+     *
      * @param v View Actual
      */
     public void seleccionarContacto(View v) {
