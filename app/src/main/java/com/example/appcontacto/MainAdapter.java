@@ -38,7 +38,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
      * ViewHolder al cual se va a referenciar, en este caso pertenece al layout item_contact
      * @param parent ViewGroup al que pertenece
      * @param viewType ViewType que recibe
-     * @return
+     * @return Devuelve una view nueva con los parametros que se le han establecido
      */
     @NonNull
     @Override
