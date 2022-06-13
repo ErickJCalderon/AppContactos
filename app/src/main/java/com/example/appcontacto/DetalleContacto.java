@@ -16,6 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Clase que implementa los detalles del contacto en la aplicacion
+ */
 public class DetalleContacto extends AppCompatActivity {
 
     TextView tvNombre, tvTelefono;
@@ -24,6 +27,10 @@ public class DetalleContacto extends AppCompatActivity {
     Button botonLlamar;
 
 
+    /**
+     * Metodo onCreate del layout activity_detalle_contacto
+     * @param savedInstanceState Bundle de la Activity actual
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,11 @@ public class DetalleContacto extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+    /**
+     * Metodo que controla la accion de llamada del boton referente al mismo, dentro del layout
+     * @param v View a la que se refiera
+     */
     public void llamar(View v){
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+numeroContacto));
             if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){

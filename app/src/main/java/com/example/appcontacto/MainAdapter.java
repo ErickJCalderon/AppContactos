@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * Clase controladora del RecyclerView establecido en el activity_main
+ */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     Activity activity;
     ArrayList <Contacto> arrayList;
@@ -42,9 +45,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.tvNumero.setText(contacto.getNumero());
 
         //Esto devolvera la posicion del item en el RecyclerView
-        holder.itemView.setOnClickListener(view -> {
-           itemClickListener.onItemClick(arrayList.get(position));
-        });
+        holder.itemView.setOnClickListener(view -> itemClickListener.onItemClick(arrayList.get(position)));
     }
 
     @Override

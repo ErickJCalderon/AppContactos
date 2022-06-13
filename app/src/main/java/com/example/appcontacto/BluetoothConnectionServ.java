@@ -15,6 +15,9 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.UUID;
 
+/**
+ * Clase que controla las conexiones Bluetooth
+ */
 public class BluetoothConnectionServ {
     private static final String TAG = "BluetoothConnectionServ";
     private String appName = "App Contactos";
@@ -30,6 +33,10 @@ public class BluetoothConnectionServ {
     ProgressDialog miProgressDialogo;
 
 
+    /**
+     * Constructor de la clase
+     * @param context Contexto que recibe para interactuar con la clase
+     */
     public BluetoothConnectionServ(Context context) {
         this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         this.context = context;
@@ -82,7 +89,7 @@ public class BluetoothConnectionServ {
         }
 
         /**
-         * Cancela todo tipo de ejecucion
+         * Metodo que cancela todo tipo de ejecucion del hilo
          */
         public void cancel() {
             Log.d(TAG, "Cancelando AcceptThread");
@@ -106,13 +113,15 @@ public class BluetoothConnectionServ {
             deviceUUID = uuid;
         }
 
+        /**
+         * Metodo que ejecuta el hilo referente a ConnecThread
+         */
         @SuppressLint("MissingPermission")
         public void run() {
             BluetoothSocket tmp = null;
             try {
-                /**
-                 * Obtiene un BluetoothSocket para una conexion con el BluetoothDevice
-                 */
+
+                //Obtiene un BluetoothSocket para una conexion con el BluetoothDevice
                 Log.d(TAG, "Intentando crear la conexion usando UUID:" + INSECURE_UUID);
                 tmp = mbtDevice.createRfcommSocketToServiceRecord(deviceUUID);
             } catch (IOException e) {
@@ -138,6 +147,9 @@ public class BluetoothConnectionServ {
             connected(btSocket, mbtDevice);
         }
 
+        /**
+         * Metodo que cancela todo tipo de ejecucion del hilo
+         */
         public void cancel() {
 
             try {
@@ -235,7 +247,7 @@ public class BluetoothConnectionServ {
         /**
          * LLamar a este metodo desde la main activity para enviar datos a otro dispositivo
          *
-         * @param bytes
+         * @param bytes Bytes que se van a escribir
          */
         public void write(byte[] bytes) {
             String text = new String(bytes, Charset.defaultCharset());
@@ -262,8 +274,9 @@ public class BluetoothConnectionServ {
     }
 
     /**
-     * @param btSocket
-     * @param mbtDevice
+     * Metodo que controla conexion entre el dispositivo que recibe los datos y el socket del dispositivo servidor
+     * @param btSocket Socket del dispositivo servidor
+     * @param mbtDevice Dispositivo bluetooth servidor
      */
     private void connected(BluetoothSocket btSocket, BluetoothDevice mbtDevice) {
         Log.d(TAG, "Estableciendo conexion");

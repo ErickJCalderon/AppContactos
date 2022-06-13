@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Clase MainActivity que controla el funcionamiento e implementacion de las demas activities establecidas
+ */
 public class MainActivity extends AppCompatActivity {
 
     String TAG = "App Contactos";
@@ -59,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
     String contact;
 
 
+    /**
+     * Metodo onCreate para el control del menu desplegable de la aplicacion
+     * @param menu Menu al que referencia
+     * @return True
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -66,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Metodo onActivityResult que controla el flujo de los Intents y los resultados que estios mismo van a devolver
+     * @param requestCode Codigo que se esta pidiendo
+     * @param resultCode Codigo del resultado esperado
+     * @param data Intent asociado
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -89,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
         }
 
-        /**
-         * Switch donde se recibe los datos de conexion de ListaDispositivos
-         */
+        //Switch donde se recibe los datos de conexion de ListaDispositivos
         switch (requestCode) {
             case Constants.CONNECT_DEVICE_INSECURE:
                 break;
@@ -104,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     *Evento que al elegir un item dentro del menu desplegable ejecuta la accion asociada en el  switcher
+     * @param item Elemento seleccionado
+     * @return Devuelve la opcion seleccionada
+     */
     @SuppressLint("MissingPermission")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -184,6 +201,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Metodo que checkea los permisos Bluetooth
+     */
     private void checkBTPermission() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
@@ -195,15 +215,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Metodo onCreate del layout activity_main
+     * @param savedInstanceState Bundle de la MainActivity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * Establecemos un BroadCast cuando el estado del emparejamiento cambie
-         */
+        //Establecemos un BroadCast cuando el estado del emparejamiento cambie
         IntentFilter intentFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(broadCastReciver4, intentFilter);
 
@@ -234,14 +255,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metodo que se implementa en el boton INICIAR CONEXION para volver a comprobar si la conexion se ha establecido
+     * @param device Dispositivo al cual conectar
+     * @param uuid uuid referente al dispositivo
+     */
     public void startBtConnection(BluetoothDevice device, UUID uuid) {
+        try {
+            bluetoothConnection.startClient(device, uuid);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         bluetoothConnection.startClient(device, uuid);
     }
 
+    /**
+     * Metodo que ejecuta startBTConnection
+     */
     public void startConnection() {
         startBtConnection(bluetoothDevice, INSECURE_UUID);
     }
 
+    /**
+     * Metodo que verifica si se han dado permisos del dispositivos a la aplicacion
+     */
     private void checkPermission() {
         // Verificar Condicion
         if (ContextCompat.checkSelfPermission(MainActivity.this,
@@ -322,6 +359,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Establecemos el adapter
         adapter = new MainAdapter(this, contactos, new MainAdapter.ItemClickListener() {
+            /**
+             * Metodo que controla el listener de los contactos seleccionados para transferir al dispositivo receptor
+             * @param contacto Contacto seleccionado
+             */
             @Override
             public void onItemClick(Contacto contacto) {
                 Intent intent = new Intent(MainActivity.this, DetalleContacto.class);
@@ -334,6 +375,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Metodo que controla los permisos solicitados a la apliacion
+     * @param requestCode Codigo solicitado
+     * @param permissions Permiso solicitado
+     * @param grantResults Resultado esperado
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -348,6 +395,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metodo que controla la seleccion de un contacto establecido en la MainActivity
+     * @param v View Actual
+     */
     public void seleccionarContacto(View v) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
@@ -355,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Crear un BroadcastReciver for ACTION_FOUND a la variable bluetoothAdapter
+     * Crea un BroadcastReciver para ACTION_FOUND a la variable bluetoothAdapter
      */
     private final BroadcastReceiver broadCastReciver1 = new BroadcastReceiver() {
         public void onReceive(Context context, @NonNull Intent intent) {
@@ -379,6 +430,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    /**
+     * Crea un BroadcastReciver para ACTION_SCAN_MODE_CHANGED a la variable bluetoothAdapter
+     */
     private final BroadcastReceiver broadCastReciver2 = new BroadcastReceiver() {
         public void onReceive(Context context, @NonNull Intent intent) {
             String action = intent.getAction();
@@ -407,6 +462,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Crea un BroadcastReciver para los dispositivos encontrados por Bluetooth (BluetoothDevice.ACTION_FOUND)
+     */
     private final BroadcastReceiver broadCastReciver3 = new BroadcastReceiver() {
 
         @SuppressLint("MissingPermission")
@@ -424,6 +482,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Crea un BroadcastReciver para ACTION_BOND_STATE_CHANGED a los dispositivos vinculados
+     */
     public final BroadcastReceiver broadCastReciver4 = new BroadcastReceiver() {
         @SuppressLint("MissingPermission")
         @Override
