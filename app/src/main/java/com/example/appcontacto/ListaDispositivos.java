@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Clase que lista los dispositvos, tanto en la opcion de emparejamiento y la de dispositivos que
+ * Clase que lista los dispositivos, tanto en la opcion de emparejamiento y la de dispositivos que
  * ya estan o estuvieron emparejados previamente
  */
 public class ListaDispositivos extends Activity {
@@ -127,7 +127,7 @@ public class ListaDispositivos extends Activity {
 
     /**
      * Este metodo AdapaterView lo que realiza es enviar el mac adress mediante el intent creado, cada
-     * vez que damos click a in item
+     * vez que damos click a un item
      */
     private final AdapterView.OnItemClickListener dispositivoClickListener = new AdapterView.OnItemClickListener() {
         @SuppressLint("MissingPermission")

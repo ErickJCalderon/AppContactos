@@ -1,7 +1,7 @@
 package com.example.appcontacto;
 
 /**
- * Clase que establece constantes para el control de contextos que se les pasa a los metodos de conexion de Bluetooth
+ * Interfaz que establece constantes para el control de contextos que se les pasa a los metodos de conexion de Bluetooth
  */
 public interface Constants {
     /**

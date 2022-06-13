@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo onActivityResult que controla el flujo de los Intents y los resultados que estios mismo van a devolver
+     * Metodo onActivityResult que controla el flujo de los Intents y los resultados que estos mismo van a devolver
      * @param requestCode Codigo que se esta pidiendo
      * @param resultCode Codigo del resultado esperado
      * @param data Intent asociado
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo que verifica si se han dado permisos del dispositivos a la aplicacion
+     * Metodo que verifica si se han dado permisos del dispositivo a la aplicacion
      */
     private void checkPermission() {
         // Verificar Condicion
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Obetiene la lista de contactos del dispositivo movil donde este instalada la aplicacion
+     * Obtiene la lista de contactos del dispositivo movil donde este instalada la aplicacion
      */
     private void getListaContacto() {
         //Iniciamos una Uri
@@ -408,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Metodo que controla los permisos solicitados a la apliacion
+     * Metodo que controla los permisos solicitados a la aplicacion
      * @param requestCode Codigo solicitado
      * @param permissions Permiso solicitado
      * @param grantResults Resultado esperado

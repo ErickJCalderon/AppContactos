@@ -72,7 +72,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
 
     /**
-     * Metodoo que devuelve la cantidad de items que hay
+     * Metodo que devuelve la cantidad de items que hay
      * @return Devuleve el tamaño del arrayList
      */
     @Override

@@ -22,20 +22,13 @@ public class BluetoothConnectionServ {
     private static final String TAG = "BluetoothConnectionServ";
     private String appName = "App Contactos";
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
-
     private final BluetoothAdapter bluetoothAdapter;
-    /**
-     * The Context.
-     */
     Context context;
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
     private ConnectedThread connectedThread;
     private BluetoothDevice mbtDevice;
     private UUID deviceUUID;
-    /**
-     * The Mi progress dialogo.
-     */
     ProgressDialog miProgressDialogo;
 
 
@@ -109,7 +102,7 @@ public class BluetoothConnectionServ {
     }
 
     /**
-     * Este hilo se ejecuta cuando se intenta establecer una conexcion saliente con un dispositivo.
+     * Este hilo se ejecuta cuando se intenta establecer una conexion saliente con un dispositivo.
      * Se ejecuta a traves de la conexion, ya sea si tiene exito o falla
      */
     private class ConnectThread extends Thread {
@@ -194,7 +187,7 @@ public class BluetoothConnectionServ {
     }
 
     /**
-     * Este metodo incia ConnectThread
+     * Este metodo inicia ConnectThread
      *
      * @param device el dispositivo que recibe
      * @param uuid   la uuid para hacer posible esa conexion
@@ -211,7 +204,7 @@ public class BluetoothConnectionServ {
 
     /**
      * Clase que es responsable de manejar los procesos de conexion del BtConnection,
-     * eviando y recibiendo la informacion
+     * enviando y recibiendo la informacion
      */
     private class ConnectedThread extends Thread {
         private BluetoothSocket btSocket;
