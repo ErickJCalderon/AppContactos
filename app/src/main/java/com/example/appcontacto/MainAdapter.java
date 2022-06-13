@@ -20,8 +20,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
 
 
-
-
+    /**
+     * Contructor del MainAdapter
+     * @param activity Activity en la que se encuentra
+     * @param arrayList ArrayList que implementa
+     * @param itemClickListener ItemClickListener el cual va a referenciar para su uso
+     */
     public MainAdapter(Activity activity, ArrayList<Contacto> arrayList, ItemClickListener itemClickListener) {
         this.activity = activity;
         this.arrayList = arrayList;
@@ -30,6 +34,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
 
+    /**
+     * ViewHolder al cual se va a referenciar, en este caso pertenece al layout item_contact
+     * @param parent ViewGroup al que pertenece
+     * @param viewType ViewType que recibe
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,6 +47,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    /**
+     * Metodo que controla union del ViewHolder al cual va a estar vinculador
+     * @param holder ViewHolder al que hace referencia
+     * @param position Indica la posicion seleccionada
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Contacto contacto = arrayList.get(position);
@@ -48,19 +63,34 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(view -> itemClickListener.onItemClick(arrayList.get(position)));
     }
 
+
+    /**
+     * Metodoo que devuelve la cantidad de items que hay
+     * @return Devuleve el tamaño del arrayList
+     */
     @Override
     public int getItemCount() {
         return arrayList.size();
     }
 
+    /**
+     * Interfaz que implementa el clickListener de cada item
+     */
     public interface ItemClickListener {
         void onItemClick(Contacto contacto);
     }
 
+    /**
+     * Clase ViewHolder que extiende de RecyclerView
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvNombre, tvNumero;
 
+        /**
+         * Constructor del ViewHolder
+         * @param itemView View a la que se refiere
+         */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

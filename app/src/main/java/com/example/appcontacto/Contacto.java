@@ -10,7 +10,7 @@ public class Contacto {
     String numero;
 
     /**
-     * Contructor de la clase
+     * Constructor de la clase
      * @param nombre Nombre del contacto
      * @param apellido Apellido del contacto
      * @param email E-mail del contacto
