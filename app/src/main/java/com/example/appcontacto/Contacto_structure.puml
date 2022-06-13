@@ -1,0 +1,179 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.example.appcontacto.Contacto",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_2564844 { 
+   	label=appcontacto
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Contacto25583359[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Contacto</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   apellido: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   email: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   nombre: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   numero: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainActivity25583359[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainActivity</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   TAG: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   adapter: MainAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   bluetoothAdapter: BluetoothAdapter [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   bluetoothConnection: BluetoothConnectionServ [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   bluetoothDevice: BluetoothDevice [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   bluetoothDevices: ArrayList&lt;BluetoothDevice&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   botonSeleccionar: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   broadCastReciver1: BroadcastReceiver [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   broadCastReciver2: BroadcastReceiver [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   broadCastReciver3: BroadcastReceiver [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   broadCastReciver4: BroadcastReceiver [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   contact: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   contactos: ArrayList&lt;Contacto&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   iniConect: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   recyclerView: RecyclerView [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- checkBTPermission()</TD></TR>
+<TR><TD ALIGN="LEFT" >- checkPermission()</TD></TR>
+<TR><TD ALIGN="LEFT" >- getListaContacto()</TD></TR>
+<TR><TD ALIGN="LEFT" ># onActivityResult(requestCode: int, resultCode: int, data: Intent)</TD></TR>
+<TR><TD ALIGN="LEFT" ># onCreate(savedInstanceState: Bundle)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateOptionsMenu(menu: Menu): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onOptionsItemSelected(item: MenuItem): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onRequestPermissionsResult(requestCode: int, permissions: String[], grantResults: int[])</TD></TR>
+<TR><TD ALIGN="LEFT" >+ seleccionarContacto(v: View)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startBtConnection(device: BluetoothDevice, uuid: UUID)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startConnection()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainAdapter25583359[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainAdapter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   activity: Activity [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   arrayList: ArrayList&lt;Contacto&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   itemClickListener: ItemClickListener [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ onBindViewHolder(holder: ViewHolder, position: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ onCreateViewHolder(parent: ViewGroup, viewType: int): ViewHolder</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+MainActivity25583359 -> Contacto25583359[label="contactos
+[0..*]"];
+MainActivity25583359 -> MainAdapter25583359[label="adapter
+[0..1]"];
+MainAdapter25583359 -> Contacto25583359[label="arrayList
+[0..*]"];
+    
+}
+@enduml
