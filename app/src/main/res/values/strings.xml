@@ -9,5 +9,15 @@
     <string name="title_activity_lista_dispositivos">ListaDispositivos</string>
     <string name="texto_dispositivos">Elige el dispositivo</string>
     <string name="texto_no_hay_dispositivos">No hay dispositivos cerca</string>
-
+    <string name="iniciar_sesion">Iniciar sesion</string>
+    <string name="he_olvidado_mi_contrase">He olvidado mi contraseña</string>
+    <string name="entrar">Entrar</string>
+    <string name="appcontacto">AppContacto</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="introduce_tu_contrase">Introduce tu contraseña</string>
+    <string name="introduce_tu_e_mail">Introduce tu e-mail</string>
+    <string name="no_tienes_una_cuenta">¿No tienes una cuenta?</string>
+    <string name="registrar">Registrar cuenta</string>
+    <string name="mail_invalido">Ingrese mail valido</string>
+    <string name="contraseña_invalida">Ingrese una contraseña mayor a 6 digitos</string>
 </resources>
