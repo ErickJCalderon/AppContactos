@@ -23,12 +23,18 @@ public class BluetoothConnectionServ {
     private String appName = "App Contactos";
     private static final UUID INSECURE_UUID = UUID.fromString("58e1a705-623d-4938-ad2e-2d33ce58b8d0");
     private final BluetoothAdapter bluetoothAdapter;
+    /**
+     * The Context.
+     */
     Context context;
     private AcceptThread acceptThread;
     private ConnectThread connectThread;
     private ConnectedThread connectedThread;
     private BluetoothDevice mbtDevice;
     private UUID deviceUUID;
+    /**
+     * The Mi progress dialogo.
+     */
     ProgressDialog miProgressDialogo;
 
 
@@ -300,7 +306,7 @@ public class BluetoothConnectionServ {
      * Escribe en el ConnectedThread
      *
      * @param out los bytes que se van a escribir
-     * @see ConnectedThread#write(byte[]) ConnectedThread#write(byte[])ConnectedThread#write(byte[])
+     * @see ConnectedThread#write(byte[]) ConnectedThread#write(byte[])ConnectedThread#write(byte[])ConnectedThread#write(byte[])
      */
     public void write(byte[] out) {
         ConnectedThread tmpConnectedThread;

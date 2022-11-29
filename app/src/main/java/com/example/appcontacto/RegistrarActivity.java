@@ -23,10 +23,25 @@ import com.google.firebase.auth.FirebaseAuthException;
  */
 public class RegistrarActivity extends AppCompatActivity {
 
+    /**
+     * The Boton registrar.
+     */
     Button botonRegistrar;
-    EditText emailRegistro,contraseñaRegistro;
+    /**
+     * The Email registro.
+     */
+    EditText emailRegistro, /**
+     * The Contraseña registro.
+     */
+    contraseñaRegistro;
 
+    /**
+     * The Firebase auth.
+     */
     FirebaseAuth firebaseAuth;
+    /**
+     * The Awesome validation.
+     */
     AwesomeValidation awesomeValidation;
 
     @Override

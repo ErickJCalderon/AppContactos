@@ -24,10 +24,31 @@ import com.google.firebase.auth.FirebaseUser;
  * Acitividad inicial para poder ingresar a la aplicacion
  */
 public class AuthActivity extends AppCompatActivity {
- Button boton_entrar,boton_registrar,boton_olvidar;
- EditText email,contraseña;
- FirebaseAuth firebaseAuth;
- AwesomeValidation awesomeValidation;
+    /**
+     * The Boton entrar.
+     */
+    Button boton_entrar, /**
+     * The Boton registrar.
+     */
+    boton_registrar, /**
+     * The Boton olvidar.
+     */
+    boton_olvidar;
+    /**
+     * The Email.
+     */
+    EditText email, /**
+     * The Contraseña.
+     */
+    contraseña;
+    /**
+     * The Firebase auth.
+     */
+    FirebaseAuth firebaseAuth;
+    /**
+     * The Awesome validation.
+     */
+    AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

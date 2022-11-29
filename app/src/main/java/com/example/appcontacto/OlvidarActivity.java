@@ -22,10 +22,22 @@ import com.google.firebase.auth.FirebaseAuthException;
  */
 public class OlvidarActivity extends AppCompatActivity {
 
+    /**
+     * The Restablecer contra.
+     */
     Button restablecerContra;
+    /**
+     * The Email.
+     */
     EditText email;
 
+    /**
+     * The Firebase auth.
+     */
     FirebaseAuth firebaseAuth;
+    /**
+     * The Awesome validation.
+     */
     AwesomeValidation awesomeValidation;
 
 
