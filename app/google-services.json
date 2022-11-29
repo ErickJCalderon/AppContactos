@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "523359961909",
+    "project_id": "appcontacto-b879e",
+    "storage_bucket": "appcontacto-b879e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523359961909:android:dbbfd097445c2d9683027c",
+        "android_client_info": {
+          "package_name": "com.example.appcontacto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523359961909-2pa8fbvn0bicknvebgv11f5oe03utkbf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD27WZzNObFDgmqIYnbq7VhLfWoGHDLAQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523359961909-2pa8fbvn0bicknvebgv11f5oe03utkbf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
