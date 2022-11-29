@@ -20,4 +20,7 @@
     <string name="registrar">Registrar cuenta</string>
     <string name="mail_invalido">Ingrese mail valido</string>
     <string name="contraseña_invalida">Ingrese una contraseña mayor a 6 digitos</string>
+    <string name="CerrarSesion">Cerrar Sesion</string>
+    <string name="olvidar">Restablezaca su Contraseña</string>
+    <string name="restablecer">Restablecer</string>
 </resources>

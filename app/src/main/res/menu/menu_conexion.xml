@@ -17,5 +17,8 @@
     <item android:id="@+id/btEmparejados"
         android:title="@string/bt_emparejados"
         app:showAsAction="never"/>
+    <item android:id="@+id/btCerrarSesion"
+        android:title="@string/CerrarSesion"
+        app:showAsAction="never"/>
 
 </menu>

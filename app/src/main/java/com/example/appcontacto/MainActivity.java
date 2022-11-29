@@ -37,6 +37,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
@@ -228,10 +230,24 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Por favor, conecta el bluetooth", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+            case R.id.btCerrarSesion:
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(MainActivity.this, "Cerrando Sesion", Toast.LENGTH_SHORT).show();
+                volverLogin();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Metodo que devulve al usuario al Login de la app
+     */
+    private void volverLogin(){
+        Intent i = new Intent(this,AuthActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
+    }
     /**
      * Metodo que checkea los permisos Bluetooth
      */

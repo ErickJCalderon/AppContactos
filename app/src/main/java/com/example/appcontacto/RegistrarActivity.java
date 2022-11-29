@@ -18,8 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
-import java.util.regex.Pattern;
-
 public class RegistrarActivity extends AppCompatActivity {
 
     Button botonRegistrar;
@@ -31,7 +29,7 @@ public class RegistrarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resitrar);
+        setContentView(R.layout.activity_registrar);
         botonRegistrar = findViewById(R.id.registroExito);
         emailRegistro = findViewById(R.id.emailRegistro);
         contraseñaRegistro = findViewById(R.id.contraseñaRegistro);
