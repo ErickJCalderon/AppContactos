@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
+/**
+ * Clase que permite el resgitro de los nuevos usuario
+ */
 public class RegistrarActivity extends AppCompatActivity {
 
     Button botonRegistrar;
@@ -68,6 +71,10 @@ public class RegistrarActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metodo que controla todos los posibles erroes de escritura con respecto al awesomeValidation
+     * @param error
+     */
     private void posiblesToastErrors(String error) {
 
         switch (error) {

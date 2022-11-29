@@ -65,7 +65,7 @@ public class OlvidarActivity extends AppCompatActivity {
     }
 
     /**
-     * este metodo controla todos los posibles erroes de escritura con respecto al awesomeValidation
+     * Metodo que controla todos los posibles erroes de escritura con respecto al awesomeValidation
      * @param error
      */
     private void posiblesToastErrors(String error) {

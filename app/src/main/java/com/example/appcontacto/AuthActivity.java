@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Acitividad inicial para poder ingresar a la aplicacion
+ */
 public class AuthActivity extends AppCompatActivity {
  Button boton_entrar,boton_registrar,boton_olvidar;
  EditText email,contraseña;
@@ -90,6 +93,10 @@ public class AuthActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Metodo que te lleva a la pantalla inicial de la app donde se gestionan los usuarios del contacto
+     */
     private void pantallaPrincipal(){
         Intent i = new Intent(this,MainActivity.class);
         i.putExtra("email", email.getText().toString());
@@ -97,6 +104,10 @@ public class AuthActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    /**
+     * Metodo que controla todos los posibles erroes de escritura con respecto al awesomeValidation
+     * @param error
+     */
     private void posiblesToastErrors(String error) {
 
         switch (error) {
