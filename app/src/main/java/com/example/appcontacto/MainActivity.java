@@ -311,10 +311,11 @@ public class MainActivity extends AppCompatActivity {
     public void startBtConnection(BluetoothDevice device, UUID uuid) {
         try {
             bluetoothConnection.startClient(device, uuid);
+            Toast.makeText(MainActivity.this, "Transfiriendo datos", Toast.LENGTH_LONG).show();
         }catch (Exception ex){
             ex.printStackTrace();
+            Toast.makeText(MainActivity.this, "No se ha podido transferir datos", Toast.LENGTH_LONG).show();
         }
-        bluetoothConnection.startClient(device, uuid);
     }
 
     /**
